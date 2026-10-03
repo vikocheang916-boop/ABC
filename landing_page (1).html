@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>沐石·湯宿 | 頂級溫泉飯店 - 尊榮至上 ｜ 極致品味 ｜ 絕對私密</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            100: '#FAF4D0',
+                            300: '#E6CA65',
+                            400: '#D4AF37',
+                            500: '#AA820A',
+                            600: '#856304'
+                        },
+                        obsidian: {
+                            900: '#090A0F',
+                            800: '#0D0D12',
+                            700: '#161821',
+                            600: '#222533'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Noto Serif TC', 'serif'],
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <!-- Iconify Icon -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- Inline Styles for Luxury Effects -->
+    <style>
+        /* Custom Custom Cursor with Mix Blend Mode */
+        .cursor-dot, .cursor-circle {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            z-index: 9999;
+            transition: transform 0.15s ease-out, opacity 0.2s ease;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #D4AF37;
+        }
+        .cursor-circle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            mix-blend-mode: difference;
+        }
+
+        /* Subtle Noise Overlay for Texture */
+        .bg-noise {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        /* Glassmorphism Styles */
+        .glass-card {
+            background: rgba(22, 24, 33, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.45);
+            box-shadow: 0 15px 35px -5px rgba(212, 175, 55, 0.15);
+        }
+
+        /* Luxury Metallic Text Gradient */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #FFF6D6 0%, #D4AF37 50%, #AA820A 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gold Border Beam Effect */
+        .gold-glow-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .gold-glow-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(212, 175, 55, 0.4), transparent 30%);
+            animation: rotateGlow 6s linear infinite;
+        }
+        @keyframes rotateGlow {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hide scrollbar for smooth appearance */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090A0F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222533;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+    </style>
+</head>
+
+<body class="bg-obsidian-900 text-stone-200 font-sans antialiased overflow-x-hidden selection:bg-gold-500 selection:text-obsidian-900 bg-noise relative">
+
+    <!-- Custom Interactive Cursor (Desktop) -->
+    <div id="cursor-dot" class="cursor-dot hidden md:block"></div>
+    <div id="cursor-circle" class="cursor-circle hidden md:block"></div>
+
+    <!-- Glassmorphism Navbar -->
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 md:py-6 flex justify-between items-center">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <span class="w-10 h-10 rounded-full border border-gold-400/40 flex items-center justify-center bg-obsidian-800/80 group-hover:border-gold-400 transition-colors">
+                    <iconify-icon icon="solar:hot-tub-bold" class="text-gold-400 text-xl"></iconify-icon>
+                </span>
+                <div class="flex flex-col">
+                    <span class="font-serif text-xl tracking-widest text-stone-100 font-semibold group-hover:text-gold-300 transition-colors">沐石·湯宿</span>
+                    <span class="text-[9px] text-gold-400/70 tracking-[0.25em] uppercase font-sans">Luxe Hot Spring</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-10 text-sm tracking-widest font-serif">
+                <a href="#experience" class="text-stone-300 hover:text-gold-400 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-gold-400 hover:after:w-full after:transition-all">尊榮體驗</a>
+                <a href="#villas" class="text-stone-300 hover:text-gold-400 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-gold-400 hover:after:w-full after:transition-all">極致湯宿</a>
+                <a href="#aesthetics" class="text-stone-300 hover:text-gold-400 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-gold-400 hover:after:w-full after:transition-all">私密美學</a>
+                <a href="#cuisine" class="text-stone-300 hover:text-gold-400 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-gold-400 hover:after:w-full after:transition-all">懷石饗宴</a>
+            </nav>
+
+            <!-- CTA Reservation Button -->
+            <div class="hidden md:block">
+                <button onclick="openBookingModal()" class="px-6 py-2.5 rounded-full border border-gold-400/60 text-gold-300 hover:bg-gold-400 hover:text-obsidian-900 transition-all duration-300 font-serif text-sm tracking-wider shadow-lg shadow-gold-500/10">
+                    立即預訂
+                </button>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-gold-400 focus:outline-none p-2">
+                <iconify-icon icon="lucide:menu" class="text-2xl" id="menu-icon"></iconify-icon>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden fixed inset-0 top-[70px] bg-obsidian-900/95 backdrop-blur-2xl z-40 flex flex-col justify-between p-8 border-t border-gold-500/20">
+            <div class="flex flex-col space-y-6 text-center font-serif text-lg tracking-widest pt-6">
+                <a href="#experience" onclick="toggleMobileMenu()" class="text-stone-200 hover:text-gold-400 py-2 border-b border-stone-800/60">尊榮體驗</a>
+                <a href="#villas" onclick="toggleMobileMenu()" class="text-stone-200 hover:text-gold-400 py-2 border-b border-stone-800/60">極致湯宿</a>
+                <a href="#aesthetics" onclick="toggleMobileMenu()" class="text-stone-200 hover:text-gold-400 py-2 border-b border-stone-800/60">私密美學</a>
+                <a href="#cuisine" onclick="toggleMobileMenu()" class="text-stone-200 hover:text-gold-400 py-2 border-b border-stone-800/60">懷石饗宴</a>
+            </div>
+            <button onclick="openBookingModal(); toggleMobileMenu();" class="w-full py-3.5 rounded-lg bg-gold-400 text-obsidian-900 font-serif font-bold text-base tracking-widest shadow-xl">
+                立即預訂
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Background Dark Onsen Image with Ambient Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=2070&auto=format&fit=crop" 
+                 alt="沐石湯宿 溫泉池景" 
+                 class="w-full h-full object-cover scale-105 filter brightness-[0.45] contrast-[1.1] transition-transform duration-10000 ease-out" 
+                 id="hero-bg">
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900 via-obsidian-900/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-obsidian-900/80 via-transparent to-obsidian-900/80"></div>
+        </div>
+
+        <!-- Floating Particles / Soft Glow Background Animation -->
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gold-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <!-- Hero Content Container -->
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center py-20">
+            <!-- Badge -->
+            <div class="hero-anim inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-400/30 bg-obsidian-800/60 backdrop-blur-md mb-8">
+                <span class="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse"></span>
+                <span class="text-xs font-serif text-gold-300 tracking-[0.3em] uppercase">Private Luxury Onsen Retreat</span>
+            </div>
+
+            <!-- Main Heading with GSAP Animation -->
+            <h1 class="hero-anim font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-stone-100 font-normal leading-tight tracking-wider mb-6">
+                洗滌塵囂 <br>
+                <span class="text-gold-gradient font-semibold">靜享極致私密</span>
+            </h1>
+
+            <!-- Subtitle Value Proposition -->
+            <p class="hero-anim font-sans text-stone-300 text-base md:text-xl font-light tracking-[0.2em] max-w-2xl mx-auto mb-10 leading-relaxed">
+                尊榮至上 ｜ 極致品味 ｜ 絕對私密
+            </p>
+
+            <!-- Hero Action Buttons -->
+            <div class="hero-anim flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
+                <button onclick="openBookingModal()" class="px-8 py-4 rounded-full bg-gradient-to-r from-gold-400 to-gold-500 text-obsidian-900 font-serif font-medium tracking-widest hover:brightness-110 transition-all shadow-xl shadow-gold-500/20 flex items-center justify-center gap-2 group">
+                    <span>立即預訂專案</span>
+                    <iconify-icon icon="solar:arrow-right-linear" class="text-lg group-hover:translate-x-1 transition-transform"></iconify-icon>
+                </button>
+                <a href="#experience" class="px-8 py-4 rounded-full border border-stone-600/80 hover:border-gold-400/80 text-stone-200 font-serif tracking-widest backdrop-blur-sm transition-all text-center">
+                    探索湯宿美學
+                </a>
+            </div>
+
+            <!-- Down Scroll Indicator -->
+            <a href="#experience" class="hero-anim mt-16 text-stone-400 hover:text-gold-400 transition-colors flex flex-col items-center gap-2">
+                <span class="text-[10px] tracking-[0.3em] uppercase font-sans">Scroll Down</span>
+                <iconify-icon icon="solar:alt-arrow-down-linear" class="text-xl animate-bounce"></iconify-icon>
+            </a>
+        </div>
+    </section>
+
+    <!-- Section 1: Key Value Pillars (3 Cards) -->
+    <section id="experience" class="py-24 md:py-32 relative z-10 max-w-7xl mx-auto px-6">
+        <!-- Section Header -->
+        <div class="text-center mb-20 section-header">
+            <span class="text-xs font-serif text-gold-400 tracking-[0.3em] uppercase block mb-3">Core Pillars</span>
+            <h2 class="font-serif text-3xl md:text-5xl text-stone-100 tracking-wider">三大尊榮價值服務</h2>
+            <div class="w-12 h-[1px] bg-gold-400/60 mx-auto mt-6"></div>
+        </div>
+
+        <!-- 3 Interactive Glass Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+            <!-- Card 1: Supreme Honor -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 transition-all duration-500 transform hover:-translate-y-2 group relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 rounded-full blur-2xl group-hover:bg-gold-500/15 transition-all"></div>
+                <div>
+                    <div class="w-14 h-14 rounded-xl border border-gold-400/30 bg-obsidian-800/80 flex items-center justify-center text-gold-400 text-2xl mb-8 group-hover:scale-110 transition-transform">
+                        <iconify-icon icon="solar:crown-minimalistic-bold"></iconify-icon>
+                    </div>
+                    <h3 class="font-serif text-2xl text-stone-100 mb-4 tracking-wide group-hover:text-gold-300 transition-colors">尊榮至上</h3>
+                    <p class="font-sans text-stone-400 text-sm leading-relaxed font-light">
+                        提供專屬管家式一對一禮賓服務，從接送、入住到個人化膳食安排，無微不至地打造獨一無二的專屬尊貴體驗。
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-stone-800/80 flex items-center justify-between text-xs text-gold-400/80">
+                    <span class="font-serif tracking-widest">Butler Service</span>
+                    <iconify-icon icon="solar:alt-arrow-right-linear" class="text-base group-hover:translate-x-1 transition-transform"></iconify-icon>
+                </div>
+            </div>
+
+            <!-- Card 2: Ultimate Taste -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 transition-all duration-500 transform hover:-translate-y-2 group relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 rounded-full blur-2xl group-hover:bg-gold-500/15 transition-all"></div>
+                <div>
+                    <div class="w-14 h-14 rounded-xl border border-gold-400/30 bg-obsidian-800/80 flex items-center justify-center text-gold-400 text-2xl mb-8 group-hover:scale-110 transition-transform">
+                        <iconify-icon icon="solar:cup-hot-bold"></iconify-icon>
+                    </div>
+                    <h3 class="font-serif text-2xl text-stone-100 mb-4 tracking-wide group-hover:text-gold-300 transition-colors">極致品味</h3>
+                    <p class="font-sans text-stone-400 text-sm leading-relaxed font-light">
+                        嚴選源頭天然弱鹼性白磺泉，搭配米其林等級極上四季懷石料理，將自然美景與當季旬味揉合為美學響宴。
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-stone-800/80 flex items-center justify-between text-xs text-gold-400/80">
+                    <span class="font-serif tracking-widest">Onsen & Cuisine</span>
+                    <iconify-icon icon="solar:alt-arrow-right-linear" class="text-base group-hover:translate-x-1 transition-transform"></iconify-icon>
+                </div>
+            </div>
+
+            <!-- Card 3: Absolute Privacy -->
+            <div class="glass-card rounded-2xl p-8 md:p-10 transition-all duration-500 transform hover:-translate-y-2 group relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 rounded-full blur-2xl group-hover:bg-gold-500/15 transition-all"></div>
+                <div>
+                    <div class="w-14 h-14 rounded-xl border border-gold-400/30 bg-obsidian-800/80 flex items-center justify-center text-gold-400 text-2xl mb-8 group-hover:scale-110 transition-transform">
+                        <iconify-icon icon="solar:shield-keyhole-bold"></iconify-icon>
+                    </div>
+                    <h3 class="font-serif text-2xl text-stone-100 mb-4 tracking-wide group-hover:text-gold-300 transition-colors">絕對私密</h3>
+                    <p class="font-sans text-stone-400 text-sm leading-relaxed font-light">
+                        全館僅設 12 間獨立獨棟湯屋別墅，專屬獨立庭園與私密通道設計，確保每一位貴賓均享有無干擾的私人寧靜時光。
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-stone-800/80 flex items-center justify-between text-xs text-gold-400/80">
+                    <span class="font-serif tracking-widest">Exclusive Privacy</span>
+                    <iconify-icon icon="solar:alt-arrow-right-linear" class="text-base group-hover:translate-x-1 transition-transform"></iconify-icon>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Villas & Bath Showcase (Visual Showcase) -->
+    <section id="villas" class="py-24 bg-obsidian-800/50 border-y border-stone-800/60 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Description -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-xs font-serif text-gold-400 tracking-[0.3em] uppercase block">Accommodations</span>
+                    <h2 class="font-serif text-3xl md:text-5xl text-stone-100 leading-snug">
+                        隱山深處的 <br>
+                        <span class="text-gold-gradient font-semibold">石築私密湯屋</span>
+                    </h2>
+                    <p class="font-sans text-stone-400 text-sm md:text-base leading-relaxed font-light">
+                        沐石·湯宿建築選用原石與黑檀木融合而成，汲取地底千米湧出之溫泉水。房內設有半露天風呂，讓您在四季微風與森林馨香中，洗去心靈塵埃。
+                    </p>
+                    
+                    <ul class="space-y-3 font-serif text-sm text-stone-300 py-2">
+                        <li class="flex items-center gap-3">
+                            <iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon>
+                            <span>100% 源泉直輸獨立半露天風呂</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon>
+                            <span>日本頂級 Dyson / AESOP 洗沐配備</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon>
+                            <span>私人枯山水日式庭園景觀</span>
+                        </li>
+                    </ul>
+
+                    <div class="pt-4">
+                        <button onclick="openBookingModal()" class="px-6 py-3 rounded-full border border-gold-400/60 text-gold-300 hover:bg-gold-400 hover:text-obsidian-900 transition-all font-serif text-sm tracking-widest">
+                            預約尊榮 Villa 房型
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Interactive Image Gallery Grid -->
+                <div class="lg:col-span-7 grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <div class="relative rounded-xl overflow-hidden group h-64 md:h-80 border border-stone-800">
+                            <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?q=80&w=1200&auto=format&fit=crop" 
+                                 alt="露天溫泉" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900/90 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+                            <span class="absolute bottom-4 left-4 font-serif text-xs tracking-widest text-stone-200">楓葉觀景露天湯屋</span>
+                        </div>
+                        <div class="relative rounded-xl overflow-hidden group h-44 md:h-56 border border-stone-800">
+                            <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?q=80&w=1200&auto=format&fit=crop" 
+                                 alt="客房設計" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900/90 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+                            <span class="absolute bottom-4 left-4 font-serif text-xs tracking-widest text-stone-200">禪意榻榻米尊榮套房</span>
+                        </div>
+                    </div>
+                    <div class="space-y-4 pt-8">
+                        <div class="relative rounded-xl overflow-hidden group h-44 md:h-56 border border-stone-800">
+                            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop" 
+                                 alt="獨立別墅外觀" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900/90 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+                            <span class="absolute bottom-4 left-4 font-serif text-xs tracking-widest text-stone-200">獨棟庭園 Villa</span>
+                        </div>
+                        <div class="relative rounded-xl overflow-hidden group h-64 md:h-80 border border-stone-800">
+                            <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1200&auto=format&fit=crop" 
+                                 alt="SPA 按摩舒壓" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-900/90 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
+                            <span class="absolute bottom-4 left-4 font-serif text-xs tracking-widest text-stone-200">靜心精油 SPA 療程</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Fine Kaiseki Culinary (懷石美學) -->
+    <section id="cuisine" class="py-24 md:py-32 relative max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <span class="text-xs font-serif text-gold-400 tracking-[0.3em] uppercase block mb-3">Gastronomy</span>
+            <h2 class="font-serif text-3xl md:text-5xl text-stone-100 tracking-wider">旬味奢華 · 頂級懷石料理</h2>
+            <p class="font-sans text-stone-400 text-sm max-w-xl mx-auto mt-4 font-light">
+                由特聘日本料理大師執掌，依循四季節氣嚴選頂級當日直送食材，呈現極致視覺與味蕾雙重饗宴。
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Meal Item 1 -->
+            <div class="glass-card rounded-2xl overflow-hidden group">
+                <div class="h-60 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1611143669185-af224c5e3252?q=80&w=1000&auto=format&fit=crop" 
+                         alt="旬味生魚片" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-obsidian-900/30"></div>
+                </div>
+                <div class="p-6">
+                    <div class="text-xs text-gold-400 font-serif tracking-widest mb-2">極上刺身</div>
+                    <h3 class="font-serif text-xl text-stone-100 mb-3">產地直送 · 旬魚造身</h3>
+                    <p class="text-stone-400 text-xs leading-relaxed font-light">
+                        每日清晨自漁港空運極品黑鮪魚、牡丹蝦與季節海鮮，搭配現磨靜岡葵山葵。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Meal Item 2 -->
+            <div class="glass-card rounded-2xl overflow-hidden group">
+                <div class="h-60 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000&auto=format&fit=crop" 
+                         alt="A5和牛燒" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-obsidian-900/30"></div>
+                </div>
+                <div class="p-6">
+                    <div class="text-xs text-gold-400 font-serif tracking-widest mb-2">強肴強品</div>
+                    <h3 class="font-serif text-xl text-stone-100 mb-3">特選 A5 飛驒和牛岩燒</h3>
+                    <p class="text-stone-400 text-xs leading-relaxed font-light">
+                        細緻霜降大理石油花，於火山岩板微炙即融，香氣四溢、入口滑嫩極致。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Meal Item 3 -->
+            <div class="glass-card rounded-2xl overflow-hidden group">
+                <div class="h-60 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=1000&auto=format&fit=crop" 
+                         alt="日式甘味" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-obsidian-900/30"></div>
+                </div>
+                <div class="p-6">
+                    <div class="text-xs text-gold-400 font-serif tracking-widest mb-2">甘味典雅</div>
+                    <h3 class="font-serif text-xl text-stone-100 mb-3">宇治手作抹茶與旬果</h3>
+                    <p class="text-stone-400 text-xs leading-relaxed font-light">
+                        嚴選京都百年老店茶道級抹茶，搭配職人手作和菓子與旬採甘甜水果。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Final Call To Action Banner -->
+    <section class="py-20 relative overflow-hidden my-12">
+        <!-- Background Banner Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=2000&auto=format&fit=crop" 
+                 alt="夜間湯宿" 
+                 class="w-full h-full object-cover filter brightness-[0.35]">
+            <div class="absolute inset-0 bg-gradient-to-r from-obsidian-900 via-obsidian-900/80 to-obsidian-900"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <span class="text-xs font-serif text-gold-400 tracking-[0.3em] uppercase block mb-4">Reservation & Offer</span>
+            <h2 class="font-serif text-3xl sm:text-5xl text-stone-100 mb-6 leading-tight">
+                即刻預約 · 展開專屬您的尊榮湯宿之旅
+            </h2>
+            <p class="font-sans text-stone-300 text-sm md:text-base mb-10 max-w-xl mx-auto font-light">
+                本月預訂即享專屬免費高級禮賓接送，以及二段式房型尊榮升等服務。每日僅限兩組貴賓。
+            </p>
+            
+            <button onclick="openBookingModal()" class="px-10 py-4 rounded-full bg-gold-400 hover:bg-gold-300 text-obsidian-900 font-serif font-bold tracking-widest transition-all shadow-2xl shadow-gold-400/20 text-base">
+                立即預訂私密專案
+            </button>
+        </div>
+    </section>
+
+    <!-- Booking Modal (Interactive Pop-up) -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian-900/80 backdrop-blur-md">
+        <div class="glass-card w-full max-w-lg rounded-2xl p-8 relative border border-gold-400/40 shadow-2xl">
+            <!-- Close Button -->
+            <button onclick="closeBookingModal()" class="absolute top-6 right-6 text-stone-400 hover:text-gold-400 text-xl transition-colors">
+                <iconify-icon icon="lucide:x"></iconify-icon>
+            </button>
+
+            <div class="mb-6">
+                <h3 class="font-serif text-2xl text-stone-100 mb-2">預約沐石·湯宿</h3>
+                <p class="text-stone-400 text-xs font-light">請填寫您的基本資訊，我們的尊榮管家將於 24 小時內與您聯繫。</p>
+            </div>
+
+            <form onsubmit="handleBookingSubmit(event)" class="space-y-4 font-sans text-sm">
+                <div>
+                    <label class="block text-xs font-serif text-stone-300 mb-1">貴賓姓名</label>
+                    <input type="text" required placeholder="例如：王小明 先生/女士" class="w-full px-4 py-2.5 rounded-lg bg-obsidian-800 border border-stone-700/80 text-stone-200 focus:outline-none focus:border-gold-400 text-xs transition-colors">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-serif text-stone-300 mb-1">聯絡電話</label>
+                        <input type="tel" required placeholder="0912-345-678" class="w-full px-4 py-2.5 rounded-lg bg-obsidian-800 border border-stone-700/80 text-stone-200 focus:outline-none focus:border-gold-400 text-xs transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-serif text-stone-300 mb-1">預計入住日期</label>
+                        <input type="date" required class="w-full px-4 py-2.5 rounded-lg bg-obsidian-800 border border-stone-700/80 text-stone-200 focus:outline-none focus:border-gold-400 text-xs transition-colors">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-serif text-stone-300 mb-1">選擇偏好 Villa 房型</label>
+                    <select class="w-full px-4 py-2.5 rounded-lg bg-obsidian-800 border border-stone-700/80 text-stone-200 focus:outline-none focus:border-gold-400 text-xs transition-colors">
+                        <option>楓觀露天湯屋獨棟 Villa</option>
+                        <option>禪意枯山水尊榮 Villa</option>
+                        <option>沐石旗艦私密頂級 Villa</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-serif text-stone-300 mb-1">特別需求備註</label>
+                    <textarea rows="3" placeholder="例如：飲食禁忌、紀念日慶祝等安排" class="w-full px-4 py-2.5 rounded-lg bg-obsidian-800 border border-stone-700/80 text-stone-200 focus:outline-none focus:border-gold-400 text-xs transition-colors"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 rounded-lg bg-gradient-to-r from-gold-400 to-gold-500 text-obsidian-900 font-serif font-bold text-sm tracking-widest hover:brightness-110 transition-all mt-4">
+                    確認送出預約需求
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Success Toast Notification -->
+    <div id="toast-msg" class="fixed bottom-8 right-8 z-50 hidden bg-gold-400 text-obsidian-900 font-serif text-sm px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3">
+        <iconify-icon icon="solar:check-square-bold" class="text-xl"></iconify-icon>
+        <span>預約需求已成功送出！管家將儘速與您聯繫。</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-obsidian-900 border-t border-stone-800/80 pt-16 pb-12 font-sans text-xs text-stone-400 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <!-- Brand Info -->
+                <div class="md:col-span-1 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-full border border-gold-400/40 flex items-center justify-center bg-obsidian-800">
+                            <iconify-icon icon="solar:hot-tub-bold" class="text-gold-400 text-base"></iconify-icon>
+                        </span>
+                        <span class="font-serif text-lg text-stone-200 font-semibold tracking-wider">沐石·湯宿</span>
+                    </div>
+                    <p class="text-stone-400 leading-relaxed font-light">
+                        台灣極致奢華溫泉飯店代表，為您締造難忘的私密心靈奢華旅程。
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div>
+                    <h4 class="font-serif text-sm text-stone-200 mb-4 tracking-wider">快速導覽</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#experience" class="hover:text-gold-400 transition-colors">尊榮體驗</a></li>
+                        <li><a href="#villas" class="hover:text-gold-400 transition-colors">極致湯宿房型</a></li>
+                        <li><a href="#cuisine" class="hover:text-gold-400 transition-colors">懷石美食饗宴</a></li>
+                        <li><a href="#" class="hover:text-gold-400 transition-colors">交通指南與周邊</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Details -->
+                <div>
+                    <h4 class="font-serif text-sm text-stone-200 mb-4 tracking-wider">預約與服務</h4>
+                    <ul class="space-y-2 font-light">
+                        <li>專線：+886 (02) 2898-8888</li>
+                        <li>信箱：service@mushi-ryokan.com</li>
+                        <li>地址：台北市北投區幽雅路 88 號</li>
+                    </ul>
+                </div>
+
+                <!-- Social Links -->
+                <div>
+                    <h4 class="font-serif text-sm text-stone-200 mb-4 tracking-wider">關注沐石</h4>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-9 h-9 rounded-full border border-stone-800 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-colors">
+                            <iconify-icon icon="ri:instagram-line" class="text-base"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-stone-800 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-colors">
+                            <iconify-icon icon="ri:facebook-fill" class="text-base"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-stone-800 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-colors">
+                            <iconify-icon icon="ri:line-fill" class="text-base"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright & Back to top -->
+            <div class="pt-8 border-t border-stone-800/60 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-stone-500 font-light">
+                <div>© 2026 沐石·湯宿 Luxe Hot Spring & Hotel. All rights reserved.</div>
+                <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="hover:text-gold-400 transition-colors flex items-center gap-1">
+                    <span>Back to top</span>
+                    <iconify-icon icon="solar:alt-arrow-up-linear"></iconify-icon>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interactions & Animations -->
+    <script>
+        // Custom Cursor Movement
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorCircle = document.getElementById('cursor-circle');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.transform = `translate3d(${posX - 4}px, ${posY - 4}px, 0)`;
+            cursorCircle.style.transform = `translate3d(${posX - 20}px, ${posY - 20}px, 0)`;
+        });
+
+        // Navbar Blur on Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-obsidian-900/85', 'backdrop-blur-md', 'shadow-2xl', 'py-3');
+                navbar.classList.remove('py-4', 'md:py-6');
+            } else {
+                navbar.classList.remove('bg-obsidian-900/85', 'backdrop-blur-md', 'shadow-2xl', 'py-3');
+                navbar.classList.add('py-4', 'md:py-6');
+            }
+        });
+
+        // Mobile Menu Toggle Function
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        // Booking Modal Triggers
+        function openBookingModal() {
+            document.getElementById('booking-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleBookingSubmit(event) {
+            event.preventDefault();
+            closeBookingModal();
+            
+            // Show Success Toast
+            const toast = document.getElementById('toast-msg');
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4000);
+        }
+
+        // GSAP Entrance Animations
+        window.onload = function() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero Elements Reveal Animation
+            gsap.from('.hero-anim', {
+                opacity: 0,
+                y: 35,
+                duration: 1.2,
+                stagger: 0.2,
+                ease: 'power3.out'
+            });
+
+            // Value Proposition Cards Scroll Reveal
+            gsap.from('.glass-card', {
+                scrollTrigger: {
+                    trigger: '#experience',
+                    start: 'top 80%'
+                },
+                opacity: 0,
+                y: 40,
+                duration: 1,
+                stagger: 0.2,
+                ease: 'power2.out'
+            });
+
+            // Section Header Animations
+            gsap.utils.toArray('.section-header').forEach(header => {
+                gsap.from(header, {
+                    scrollTrigger: {
+                        trigger: header,
+                        start: 'top 85%'
+                    },
+                    opacity: 0,
+                    y: 30,
+                    duration: 1,
+                    ease: 'power2.out'
+                });
+            });
+        };
+    </script>
+</body>
+</html>
